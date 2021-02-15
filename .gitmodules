@@ -1,0 +1,3 @@
+[submodule "linky-ui"]
+	path = linky-ui
+	url = https://github.com/rolyli/linky-ui
