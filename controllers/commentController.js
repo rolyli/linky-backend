@@ -1,0 +1,1 @@
+const Commment = require("../models/comment");
