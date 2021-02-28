@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 mongoose.connect(process.env.CON_STR, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
 const db = mongoose.connection;
@@ -22,33 +23,28 @@ app.use(
   })
 );
 
-
-// JWT Token Verification Middleware
-authenticateToken = (req, res, next) => {
-  // Gather the jwt access token from the request header
-  const authHeader = req.headers['authorization']
-  const token = authHeader && authHeader.split(' ')[1]
-  if (token == null) return res.sendStatus(401) // if there isn't any token
-
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string, (err: any, user: any) => {
-    console.log(err)
-    if (err) return res.sendStatus(403)
-    req.user = user
-    next() // pass the execution off to whatever request the client intended
-  })
-}
-
-
+const auth = require("./utils/auth");
 const postController = require("./controllers/postController");
+const commentController = require("./controllers/commentController");
 
 app.use(cors());
 app.use(express.static("build"));
+
+router.get("/auth/login", (req, res) => {
+  let token = auth.generateAccessToken({
+    username: req.body.username,
+    user_id: req.body.user_id,
+  });
+  res.json(token);
+});
 
 router.get("/posts/:page?", postController.post_list);
 router.get("/post/:id", postController.post_detail);
 router.post("/post", postController.post_post);
 router.get("/post", postController.post_detail_list);
 router.delete("/post/:id", postController.post_delete);
+
+router.post("/post/:id/comment", auth.authenticateToken, commentController.comment_post);
 
 app.use("/api", router);
 app.listen(process.env.PORT || 3001);
