@@ -8,8 +8,8 @@ exports.generateAccessToken = (user) => {
   });
 };
 
+// utility for verifying user and returns token data
 exports.verifyToken = (token) => {
-  // verifies user and returns token data
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     console.log(err);
     return user;
@@ -25,9 +25,9 @@ exports.authenticateToken = (req, res, next) => {
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) {
-        return res.sendStatus(403);
+      return res.sendStatus(403);
     }
-        req.user = user;
+    req.user = user;
     next(); // pass the execution off to whatever request the client intended
   });
 };

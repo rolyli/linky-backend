@@ -1,0 +1,43 @@
+const User = require("../models/user");
+const auth = require("../utils/auth");
+
+exports.user_signup = (req, res) => {
+  User.create(
+    { username: req.body.username, password: req.body.password, role: "user" },
+    (error, result) => {
+      if (error) {
+        console.error(error);
+        return res.status(403).end;
+      }
+    }
+  );
+  let token = auth.generateAccessToken({
+    user_id: req.body.user_id,
+    username: req.body.username,
+    role: "user"
+  });
+  res.json(token);
+};
+
+exports.user_login = (req, res) => {
+  // returns a jwt token
+  User.find(
+    { username: req.body.username, password: req.body.password },
+    (error, result) => {
+      if (error) {
+        console.error(error);
+        return res.status(500);
+      }
+      if (result.length > 0) {
+        let token = auth.generateAccessToken({
+          user_id: result._id,
+          username: req.body.username,
+          role: result.role,
+        });
+        res.json(token);
+      } else {
+        res.status(403).end();
+      }
+    }
+  );
+};
