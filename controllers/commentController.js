@@ -14,8 +14,8 @@ exports.comment_post = (req, res) => {
         {
           $push: {
             comment: {
-              username: req.user.username,
-              user_id: req.user.user_id,
+              username: req.token.username,
+              user_id: req.token.user_id,
               text: req.body.text,
             },
           },
@@ -35,8 +35,8 @@ exports.comment_post = (req, res) => {
     {
       $push: {
         comment: {
-          username: req.user.username,
-          user_id: req.user.user_id,
+          username: req.token.username,
+          user_id: req.token.user_id,
           text: req.body.text,
         },
       },

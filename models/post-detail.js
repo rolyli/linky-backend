@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema(
   {
-    id: mongoose.Types.ObjectId,
+    id: mongoose.Types.ObjectId, //parent post id
+    username: String,
+    user_id: String,
     text: String,
     attachment: Array,
     comment: Array,

@@ -27,7 +27,7 @@ exports.authenticateToken = (req, res, next) => {
     if (err) {
       return res.sendStatus(403);
     }
-    req.user = user;
+    req.token = user;
     next(); // pass the execution off to whatever request the client intended
   });
 };

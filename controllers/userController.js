@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const auth = require("../utils/auth");
+var ObjectId = require("mongoose").Types.ObjectId;
 
 exports.user_signup = (req, res) => {
   User.create(
@@ -14,7 +15,7 @@ exports.user_signup = (req, res) => {
   let token = auth.generateAccessToken({
     user_id: req.body.user_id,
     username: req.body.username,
-    role: "user"
+    role: "user",
   });
   res.json(token);
 };
@@ -30,7 +31,7 @@ exports.user_login = (req, res) => {
       }
       if (result.length > 0) {
         let token = auth.generateAccessToken({
-          user_id: result._id,
+          user_id: new ObjectId(),
           username: req.body.username,
           role: result.role,
         });

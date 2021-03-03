@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const postSchema = new mongoose.Schema(
   {
     text: String,
+    username: String,
+    user_id: String,
     attachment: Array,
     comment: Array,
   },

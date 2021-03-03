@@ -2,14 +2,20 @@ const Post = require("../models/post");
 var PostDetail = require("../models/post-detail");
 var ObjectId = require("mongoose").Types.ObjectId;
 
+
+// requires auth from authenticateToken()
 exports.post_post = (req, res) => {
   Post.create(
     {
+      username: req.token.username,
+      user_id: req.token.user_id,
       text: req.body.text,
       attachment: req.body.attachment,
     },
     (error, result) => {
       PostDetail.create({
+        username: req.token.username,
+        user_id: req.token.user_id,
         id: result._id,
         text: req.body.text,
         attachment: req.body.attachment,
