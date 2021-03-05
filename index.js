@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 const router = express.Router();
 const mongoose = require("mongoose");
+const path = require("path");
 
 // Connect to MongoDB Atlas
 mongoose.connect(process.env.CON_STR, {
@@ -47,4 +48,8 @@ router.post(
 );
 
 app.use("/api", router);
-app.listen(process.env.PORT || 3001);
+app
+  .get("*", (req, res) =>
+    res.sendFile(path.join(__dirname + "/build/index.html"))
+  )
+  .listen(5000, () => console.log("Server on port 5000"));
