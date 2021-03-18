@@ -7,6 +7,7 @@ var ObjectId = require("mongoose").Types.ObjectId;
 exports.post_post = (req, res) => {
   Post.create(
     {
+      title: req.body.title,
       username: req.token.username,
       user_id: req.token.user_id,
       text: req.body.text,
@@ -14,6 +15,7 @@ exports.post_post = (req, res) => {
     },
     (error, result) => {
       PostDetail.create({
+        title: req.body.title,
         username: req.token.username,
         user_id: req.token.user_id,
         id: result._id,
