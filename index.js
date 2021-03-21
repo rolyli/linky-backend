@@ -23,6 +23,8 @@ app.use(
     extended: true,
   })
 );
+app.use(express.json());
+
 
 const auth = require("./utils/auth");
 const postController = require("./controllers/postController");
@@ -32,7 +34,7 @@ const userController = require("./controllers/userController");
 app.use(cors());
 app.use(express.static("build"));
 
-router.get("/user/login", userController.user_login);
+router.post("/user/login", userController.user_login);
 router.post("/user/signup", userController.user_signup);
 
 router.get("/posts/:page?", postController.post_list);
