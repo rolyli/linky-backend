@@ -17,7 +17,14 @@ exports.user_signup = (req, res) => {
     username: req.body.username,
     role: "user",
   });
-  res.json(token);
+
+  
+
+  res.json({
+    username: req.body.username,
+    role: "user",
+    token
+  });
 };
 
 exports.user_login = (req, res) => {
@@ -35,7 +42,11 @@ exports.user_login = (req, res) => {
           username: req.body.username,
           role: result.role,
         });
-        res.json(token);
+        res.json({
+          username: req.body.username,
+          role: "user",
+          token
+        });;
       } else {
         res.status(403).end();
       }
