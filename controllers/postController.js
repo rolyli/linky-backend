@@ -2,7 +2,6 @@ const Post = require("../models/post");
 var PostDetail = require("../models/post-detail");
 var ObjectId = require("mongoose").Types.ObjectId;
 
-
 // requires auth from authenticateToken()
 exports.post_post = (req, res) => {
   Post.create(
@@ -57,13 +56,18 @@ exports.post_detail_list = (req, res) => {
 exports.post_list = (req, res) => {
   const page = req.params.page * 10 || 0;
 
-  Post.find({}, {}, { skip: page, limit: 10 }, (error, result) => {
-    if (error) {
-      console.error(error);
-    }
+  Post.find(
+    {},
+    null,
+    { sort: { 'createdAt' : -1 }, skip: page, limit: 10 },
+    (error, result) => {
+      if (error) {
+        console.error(error);
+      }
 
-    res.json(result);
-  });
+      res.json(result);
+    }
+  );
 };
 
 exports.post_detail = (req, res) => {
