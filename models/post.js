@@ -10,6 +10,10 @@ const postSchema = new mongoose.Schema(
     user_id: String,
     attachment: Array,
     comment: Array,
+    channel: String,
+    comment_count: Number,
+    upvote: Array,
+    downvote: Array
   },
   { timestamps: true }
 );

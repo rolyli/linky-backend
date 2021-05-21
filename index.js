@@ -40,6 +40,8 @@ router.post("/user/signup", userController.user_signup);
 router.get("/posts/:page?", postController.post_list);
 router.get("/post/:id", postController.post_detail);
 router.post("/post", auth.authenticateToken, postController.post_post);
+router.post("/post/:id/upvote", auth.authenticateToken, postController.post_upvote);
+
 router.get("/post", postController.post_detail_list);
 router.delete("/post/:id", postController.post_delete);
 

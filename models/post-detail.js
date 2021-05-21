@@ -11,6 +11,9 @@ const postSchema = new mongoose.Schema(
     text: String,
     attachment: Array,
     comment: Array,
+    channel: String,
+    upvote: Array,
+    downvote: Array
   },
   { timestamps: true }
 );
