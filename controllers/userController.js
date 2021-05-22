@@ -38,7 +38,7 @@ exports.user_login = (req, res) => {
       }
       if (result.length > 0) {
         let token = auth.generateAccessToken({
-          user_id: new ObjectId(),
+          user_id: result._id,
           username: req.body.username,
           role: result.role,
         });

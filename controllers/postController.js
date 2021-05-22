@@ -13,13 +13,15 @@ exports.post_upvote = (req, res) => {
         { _id: req.params.id },
         {
           $pull: {
-            upvote: req.token.user_id
-          }
+            upvote: req.token.user_id,
+          },
         },
         (error, result) => {
           if (error) {
             console.error(error);
+            res.send("Error voting");
           }
+          res.send("0").end();
         }
       );
     } else {
@@ -27,18 +29,17 @@ exports.post_upvote = (req, res) => {
         { _id: req.params.id },
         {
           $push: {
-            upvote: req.token.user_id
-          }
+            upvote: req.token.user_id,
+          },
         },
         (error, result) => {
           if (error) {
             console.error(error);
           }
+          res.send("1").end();
         }
       );
     }
-
-    res.end()
   });
 };
 
