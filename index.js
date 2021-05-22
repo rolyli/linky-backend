@@ -56,4 +56,4 @@ app
   .get("*", (req, res) =>
     res.sendFile(path.join(__dirname + "/build/index.html"))
   )
-  .listen(5000, () => console.log("Server on port 5000"));
+  .listen(process.env.port, () => console.log("Server started"));
