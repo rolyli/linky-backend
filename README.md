@@ -8,6 +8,8 @@ This is an open source Instagram/Reddit clone comprising of micro-services:
 Additionally,
 - [linky-bot](https://github.com/rolyli/linky-bot): Discord bot implemented with Discord.js that saves image links from Discord channels to persistent storage, to be consumed by linky-frontend.
 
+Postman collection for the API is available in the root folder of the project.
+
 ## Prerequisites
 
 - MongoDB Atlas database keys
