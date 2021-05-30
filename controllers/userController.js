@@ -3,27 +3,42 @@ const auth = require("../utils/auth");
 var ObjectId = require("mongoose").Types.ObjectId;
 
 exports.user_signup = (req, res) => {
-  User.create(
-    { username: req.body.username, password: req.body.password, role: "user" },
-    (error, result) => {
-      if (error) {
-        console.error(error);
-        return res.status(403).end;
-      }
+  User.find({ username: req.body.username }, (error, result) => {
+    if (error) {
+      console.error(error);
+      return res.status(500);
     }
-  );
-  let token = auth.generateAccessToken({
-    user_id: req.body.user_id,
-    username: req.body.username,
-    role: "user",
-  });
 
-  
+    if (result.length != 0) {
+      res.status(403).end();
+    }
 
-  res.json({
-    username: req.body.username,
-    role: "user",
-    token
+    else {
+      User.create(
+        {
+          username: req.body.username,
+          password: req.body.password,
+          role: "user",
+        },
+        (error, result) => {
+          if (error) {
+            console.error(error);
+            return res.status(403).end;
+          }
+        }
+      );
+      let token = auth.generateAccessToken({
+        user_id: req.body.user_id,
+        username: req.body.username,
+        role: "user",
+      });
+
+      res.json({
+        username: req.body.username,
+        role: "user",
+        token,
+      });
+    }
   });
 };
 
@@ -38,15 +53,15 @@ exports.user_login = (req, res) => {
       }
       if (result.length > 0) {
         let token = auth.generateAccessToken({
-          user_id: result._id,
+          user_id: result[0]._id,
           username: req.body.username,
-          role: result.role,
+          role: result[0].role,
         });
         res.json({
           username: req.body.username,
           role: "user",
-          token
-        });;
+          token,
+        });
       } else {
         res.status(403).end();
       }

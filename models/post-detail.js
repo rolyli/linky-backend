@@ -13,7 +13,8 @@ const postSchema = new mongoose.Schema(
     comment: Array,
     channel: String,
     upvote: Array,
-    downvote: Array
+    downvote: Array,
+    comment_count: Number
   },
   { timestamps: true }
 );

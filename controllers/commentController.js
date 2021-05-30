@@ -46,11 +46,16 @@ exports.comment_post = (req, res) => {
       PostDetail.findOneAndUpdate(
         { id: req.params.id },
         {
-          comment: updateComment(
-            new_comment,
-            result[0].comment,
-            req.body.comment_id
-          ),
+          $set: {
+            comment: updateComment(
+              new_comment,
+              result[0].comment,
+              req.body.comment_id
+            ),
+          },
+          $inc: {
+            comment_count: 1,
+          },
         },
         (error, result) => {
           if (error) {
@@ -71,6 +76,9 @@ exports.comment_post = (req, res) => {
             user_id: req.token.user_id,
             text: req.body.text,
           },
+        },
+        $inc: {
+          comment_count: 1,
         },
       },
       (error, result) => {
@@ -127,5 +135,4 @@ exports.comment_post = (req, res) => {
     }
   });
   */
-
 };

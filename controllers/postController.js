@@ -61,6 +61,7 @@ exports.post_post = (req, res) => {
         id: result._id,
         text: req.body.text,
         attachment: req.body.attachment,
+        comment_count: 0,
         comment: [],
       });
     }
